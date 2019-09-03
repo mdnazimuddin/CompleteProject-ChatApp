@@ -12,6 +12,8 @@
 		F491DABC231E7898004D4355 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F491DABA231E7898004D4355 /* Main.storyboard */; };
 		F491DABE231E78AC004D4355 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F491DABD231E78AC004D4355 /* Assets.xcassets */; };
 		F491DAC1231E78AC004D4355 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F491DABF231E78AC004D4355 /* LaunchScreen.storyboard */; };
+		F491DACA231E7E26004D4355 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491DAC9231E7E26004D4355 /* LoginController.swift */; };
+		F491DACD231E81B9004D4355 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491DACC231E81B9004D4355 /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		F491DABD231E78AC004D4355 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F491DAC0231E78AC004D4355 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F491DAC2231E78AC004D4355 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F491DAC9231E7E26004D4355 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		F491DACC231E81B9004D4355 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,32 @@
 		F491DAB5231E7898004D4355 /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				F491DACB231E8181004D4355 /* Extension */,
+				F491DAC8231E7DEA004D4355 /* Controller */,
 				F491DAB6231E7898004D4355 /* AppDelegate.swift */,
-				F491DAB8231E7898004D4355 /* ViewController.swift */,
 				F491DABA231E7898004D4355 /* Main.storyboard */,
 				F491DABD231E78AC004D4355 /* Assets.xcassets */,
 				F491DABF231E78AC004D4355 /* LaunchScreen.storyboard */,
 				F491DAC2231E78AC004D4355 /* Info.plist */,
 			);
 			path = ChatApp;
+			sourceTree = "<group>";
+		};
+		F491DAC8231E7DEA004D4355 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F491DAC9231E7E26004D4355 /* LoginController.swift */,
+				F491DAB8231E7898004D4355 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F491DACB231E8181004D4355 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F491DACC231E81B9004D4355 /* UIColor.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +158,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F491DAB9231E7898004D4355 /* ViewController.swift in Sources */,
+				F491DACD231E81B9004D4355 /* UIColor.swift in Sources */,
+				F491DACA231E7E26004D4355 /* LoginController.swift in Sources */,
 				F491DAB7231E7898004D4355 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
