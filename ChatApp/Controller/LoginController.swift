@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class LoginController: UIViewController {
     
@@ -17,6 +19,7 @@ class LoginController: UIViewController {
     let emailTextField = UITextField()
     let passwordTextField = UITextField()
     let loginRegisterButton = UIButton(type: .system)
+    var loginRegisterSegmentControl = UISegmentedControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +28,7 @@ class LoginController: UIViewController {
         self.setupInputContainerView()
         self.setupLoginRegisterButton()
         self.setupProfileImageView()
+        self.setupLoginRegisterSegmentedControl()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -93,7 +97,7 @@ class LoginController: UIViewController {
     func setupPasswordTextField(){
         passwordTextField.placeholder = "Password"
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        passwordTextField.isSecureTextEntry = true
+        //passwordTextField.isSecureTextEntry = true
         inputsContainerView.addSubview(passwordTextField)
         
         //need x, y, width, height constraints
@@ -123,6 +127,7 @@ class LoginController: UIViewController {
         loginRegisterButton.setTitleColor(UIColor.white, for: .normal)
         loginRegisterButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         loginRegisterButton.translatesAutoresizingMaskIntoConstraints = false
+        loginRegisterButton.addTarget(self, action: #selector(hendleRegister), for: .touchUpInside)
         view.addSubview(loginRegisterButton)
         
         //need x, y, width, height constraints
@@ -131,6 +136,36 @@ class LoginController: UIViewController {
         loginRegisterButton.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor).isActive = true
         loginRegisterButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
+    func setupLoginRegisterSegmentedControl(){
+        let items = ["Login","Register"]
+        loginRegisterSegmentControl = UISegmentedControl(items: items)
+        loginRegisterSegmentControl.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginRegisterSegmentControl)
+        
+         //need x, y, width, height constraints
+    }
     
+}
 
+extension LoginController{
+    @objc func hendleRegister(){
+        guard let name = nameTextField.text else {return}
+        guard let email = emailTextField.text else {return}
+        guard let pass = passwordTextField.text else {return}
+        
+        Auth.auth().createUser(withEmail: email, password: pass) { user, error in
+            if error != nil  {
+               print("Error: \(error?.localizedDescription)")
+                return
+            }
+            // Authenticated Successful create
+            let userDic = ["name":name,"email":email]
+            
+            var ref: DatabaseReference!
+            ref = Database.database().reference()
+            ref.child("user").childByAutoId().setValue(userDic)
+            print("Success")
+        }
+        
+    }
 }
