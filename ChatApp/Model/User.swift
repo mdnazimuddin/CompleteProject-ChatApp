@@ -9,12 +9,15 @@
 import Foundation
 
 class User{
+    let id:String?
     let name:String?
     let email:String?
     let profileImageUrl:String?
-    init(name:String,email:String,profileImageUrl:String) {
-        self.name = name
-        self.email = email
-        self.profileImageUrl = profileImageUrl
+    init(dic:[String:Any],id:String) {
+        self.id = id
+        self.name = (dic["name"] as! String)
+        self.email = (dic["email"] as! String)
+        self.profileImageUrl = (dic["profileImageUrl"] as! String)
+        
     }
 }

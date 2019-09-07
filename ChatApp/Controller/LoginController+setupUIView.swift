@@ -35,9 +35,11 @@ extension LoginController{
         setupPasswordTextField()
     }
     func setupProfileImageView(){
-        profileImageView.image = UIImage(named: "profile.png")
+        profileImageView.image = UIImage(named: String.defaultImageName)
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.contentMode = .scaleAspectFill
+        profileImageView.layer.cornerRadius = 75
+        profileImageView.clipsToBounds = true
         
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         profileImageView.isUserInteractionEnabled = true
@@ -52,7 +54,7 @@ extension LoginController{
     }
     
     func setupNameTextField(){
-        nameTextField.placeholder = "Name"
+        nameTextField.placeholder = String.name
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         inputsContainerView.addSubview(nameTextField)
         
@@ -70,7 +72,7 @@ extension LoginController{
         
     }
     func setupEmailTextField(){
-        emailTextField.placeholder = "Email"
+        emailTextField.placeholder = String.email
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         inputsContainerView.addSubview(emailTextField)
         
@@ -87,7 +89,7 @@ extension LoginController{
         
     }
     func setupPasswordTextField(){
-        passwordTextField.placeholder = "Password"
+        passwordTextField.placeholder = String.password
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         //passwordTextField.isSecureTextEntry = true
         inputsContainerView.addSubview(passwordTextField)
@@ -116,7 +118,7 @@ extension LoginController{
     func setupLoginRegisterButton(){
         
         loginRegisterButton.backgroundColor = UIColor(r: 80, g: 101, b: 161)
-        loginRegisterButton.setTitle("Register", for: .normal)
+        loginRegisterButton.setTitle(String.register, for: .normal)
         loginRegisterButton.setTitleColor(UIColor.white, for: .normal)
         loginRegisterButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         loginRegisterButton.translatesAutoresizingMaskIntoConstraints = false
@@ -130,7 +132,7 @@ extension LoginController{
         loginRegisterButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     func setupLoginRegisterSegmentedControl(){
-        let items = ["Login","Register"]
+        let items = [String.login,String.register]
         loginRegisterSegmentControl = UISegmentedControl(items: items)
         loginRegisterSegmentControl.tintColor = UIColor.white
         loginRegisterSegmentControl.selectedSegmentIndex = 1

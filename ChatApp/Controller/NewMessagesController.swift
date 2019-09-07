@@ -14,10 +14,12 @@ class NewMessagesController: UITableViewController {
 
     var ref = DatabaseReference.init()
     var users = [User]()
+    var messagesController:MessagesController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(hendleCancel))
-        self.tableView.register(UserCell.self, forCellReuseIdentifier: "cell")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: String.cancel, style: .plain, target: self, action: #selector(hendleCancel))
+        self.tableView.register(UserCell.self, forCellReuseIdentifier: String.cell)
         self.fetchUser()
     }
     func fetchUser(){
@@ -26,8 +28,7 @@ class NewMessagesController: UITableViewController {
         let userRef = ref.child("users")
         userRef.observe(.childAdded, with: { snapshot in
             if let dic = snapshot.value as? [String:Any] {
-                let user = User(name: dic["name"] as! String, email: dic["email"] as! String, profileImageUrl: dic["profileImageUrl"] as! String)
-               // print(user.name!)
+                let user = User(dic:dic,id: snapshot.key)
                 self.users.append(user)
                 
                 DispatchQueue.main.async {
@@ -47,9 +48,25 @@ class NewMessagesController: UITableViewController {
         return users.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:UserCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! UserCell
-        cell.textLabel?.text = users[indexPath.row].name
-        cell.detailTextLabel?.text = users[indexPath.row].email
+        let cell:UserCell = tableView.dequeueReusableCell(withIdentifier: String.cell, for: indexPath) as! UserCell
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
+        cell.profileImageView.contentMode = .scaleAspectFill
+        
+        if let profileImageUrl = user.profileImageUrl {
+            cell.profileImageView.loadImageUsingCachWithUrlString(urlString: profileImageUrl)
+        }
         return cell
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true) {
+            let user = self.users[indexPath.row]
+            
+            self.messagesController?.showChatControllerForUser(user: user)
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
 }

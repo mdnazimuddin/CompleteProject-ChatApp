@@ -29,7 +29,6 @@ extension LoginController:UIImagePickerControllerDelegate,UINavigationController
         self.dismiss(animated: true, completion: nil)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("Cancel Picker")
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -73,11 +72,11 @@ extension LoginController{
             
             let imageName = NSUUID().uuidString
             let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
-            let uploadImage = self.profileImageView.image?.pngData()
+//            let uploadImage = self.profileImageView.image?.pngData()
+            let uploadImage = self.profileImageView.image?.jpegData(compressionQuality: 0.1)
             
             storageRef.putData(uploadImage!, metadata: nil) { (metadata, error) in
                 if error == nil {
-                    print("Success")
                     storageRef.downloadURL(completion: { (url, error) in
                         guard let url = url?.absoluteString else {return}
                         let userDic = ["name":name,"email":email,"profileImageUrl":url] as [String : Any]
@@ -87,7 +86,6 @@ extension LoginController{
                     print("error save image")
                 }
             }
-            
             
         }
         
@@ -126,7 +124,7 @@ extension LoginController{
             passTextFieldHeightAnchor = passwordTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: 1/2)
             passTextFieldHeightAnchor?.isActive = true
             
-            profileImageView.image = UIImage(named: "profile.png")
+            profileImageView.image = UIImage(named: String.chatImageName)
         }else{
             nameTextFieldHeightAnchor?.isActive = false
             
@@ -140,6 +138,8 @@ extension LoginController{
             passTextFieldHeightAnchor?.isActive = false
             passTextFieldHeightAnchor = passwordTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: 1/3)
             passTextFieldHeightAnchor?.isActive = true
+            
+            profileImageView.image = UIImage(named: String.defaultImageName)
         }
         
         
